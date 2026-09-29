@@ -1,0 +1,72 @@
+<Window
+    x:Class="PhoneSpeaker.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="PhoneSpeaker">
+    <Grid x:Name="Root" Background="{ThemeResource AppBackground}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel MaxWidth="920" HorizontalAlignment="Center" Padding="36,28,36,34" Spacing="20">
+                <Grid ColumnDefinitions="*,Auto">
+                    <StackPanel Spacing="4">
+                        <TextBlock Text="PhoneSpeaker" FontSize="32" FontWeight="SemiBold" />
+                        <TextBlock Text="Phone Bluetooth Audio → Windows → Speaker/Buds" Foreground="{ThemeResource MutedText}" FontSize="15" />
+                    </StackPanel>
+                    <Button x:Name="ThemeButton" Grid.Column="1" Content="☾  Theme" Click="ThemeButton_Click" VerticalAlignment="Top" />
+                </Grid>
+
+                <Border Background="{ThemeResource CardBackground}" CornerRadius="16" Padding="24">
+                    <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto" RowSpacing="16">
+                        <StackPanel Spacing="5">
+                            <TextBlock Text="PHONE CONNECTION" FontSize="12" FontWeight="Bold" CharacterSpacing="120" Foreground="{ThemeResource MutedText}" />
+                            <TextBlock Text="Choose a paired phone that supports Bluetooth audio." FontSize="14" Foreground="{ThemeResource MutedText}" />
+                        </StackPanel>
+                        <Button Grid.Column="1" Content="↻  Refresh" Click="RefreshButton_Click" />
+                        <ComboBox x:Name="PhonePicker" Grid.Row="1" Grid.ColumnSpan="2" PlaceholderText="Searching paired audio devices…" MinWidth="320" HorizontalAlignment="Stretch" DisplayMemberPath="Name" />
+                        <StackPanel Grid.Row="2" Orientation="Horizontal" Spacing="9" VerticalAlignment="Center">
+                            <Ellipse x:Name="StatusDot" Width="10" Height="10" Fill="#8993A4" />
+                            <TextBlock x:Name="ConnectionStatus" Text="Disconnected" FontWeight="SemiBold" />
+                            <TextBlock x:Name="StatusDetail" Text=" · Pair the phone in Windows Bluetooth settings first" Foreground="{ThemeResource MutedText}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" Spacing="10">
+                            <Button x:Name="ConnectButton" Content="Connect" Click="ConnectButton_Click" />
+                            <Button x:Name="DisconnectButton" Content="Disconnect" Click="DisconnectButton_Click" IsEnabled="False" />
+                            <Button Content="Open Bluetooth settings" Click="BluetoothSettings_Click" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="18">
+                    <Border Background="{ThemeResource CardBackground}" CornerRadius="16" Padding="24">
+                        <StackPanel Spacing="12">
+                            <TextBlock Text="AUDIO INPUT" FontSize="12" FontWeight="Bold" CharacterSpacing="120" Foreground="{ThemeResource MutedText}" />
+                            <TextBlock Text="Bluetooth A2DP · Stereo" FontSize="20" FontWeight="SemiBold" />
+                            <TextBlock x:Name="AudioStatus" Text="Waiting for phone audio" Foreground="{ThemeResource MutedText}" TextWrapping="Wrap" />
+                            <Border Background="#144263EB" CornerRadius="8" Padding="12">
+                                <TextBlock Text="Windows receives and renders the Bluetooth stream through its audio engine. The app does not alter or decode the audio." TextWrapping="Wrap" FontSize="13" />
+                            </Border>
+                        </StackPanel>
+                    </Border>
+                    <Border Grid.Column="1" Background="{ThemeResource CardBackground}" CornerRadius="16" Padding="24">
+                        <StackPanel Spacing="12">
+                            <TextBlock Text="WINDOWS OUTPUT" FontSize="12" FontWeight="Bold" CharacterSpacing="120" Foreground="{ThemeResource MutedText}" />
+                            <TextBlock Text="System playback device" FontSize="20" FontWeight="SemiBold" />
+                            <TextBlock Text="Phone audio follows Windows’ current output, including PC speakers, wired audio, HDMI, or Bluetooth headphones." Foreground="{ThemeResource MutedText}" TextWrapping="Wrap" />
+                            <Button Content="Choose output in Windows Settings" Click="SoundSettings_Click" HorizontalAlignment="Left" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Border Background="{ThemeResource CardBackground}" CornerRadius="16" Padding="24">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="SETTINGS" FontSize="12" FontWeight="Bold" CharacterSpacing="120" Foreground="{ThemeResource MutedText}" />
+                        <CheckBox x:Name="AutoReconnectToggle" Content="Reconnect to the last phone when PhoneSpeaker starts" Checked="AutoReconnect_Changed" Unchecked="AutoReconnect_Changed" />
+                        <CheckBox x:Name="LaunchAtSignInToggle" Content="Start PhoneSpeaker when I sign in to Windows (minimized)" Checked="LaunchAtSignIn_Changed" Unchecked="LaunchAtSignIn_Changed" />
+                        <TextBlock Text="Phone audio volume and mute are controlled by the phone and Windows. Windows does not expose the incoming A2DP stream as a separate app audio session, so per-phone volume, independent mixing, and app-level output routing are unavailable." Foreground="{ThemeResource MutedText}" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Border>
+                <InfoBar x:Name="MessageBar" IsOpen="False" IsClosable="True" Severity="Informational" />
+                <TextBlock Text="Requires Windows 10 version 2004 or later. The phone must be paired in Windows first." Foreground="{ThemeResource MutedText}" FontSize="12" HorizontalAlignment="Center" />
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Window>
